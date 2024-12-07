@@ -648,13 +648,67 @@ session-id: abc123
 - Session unique pour chaque utilisateur
 - Sanitization des entrées utilisateur
 
-## Contribution
 
-1. Fork le projet
-2. Créez votre branche (`git checkout -b feature/AmazingFeature`)
-3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+
+---
+
+## **Contribution**
+
+Nous accueillons avec plaisir les contributions à ce projet. Suivez les étapes ci-dessous pour proposer vos améliorations ou nouvelles fonctionnalités.
+
+---
+
+### **Étapes pour Contribuer**
+
+1. **Forker le dépôt**  
+   Créez une copie de ce projet sur votre propre compte GitHub en cliquant sur le bouton **Fork**.
+
+2. **Créer une branche pour votre fonctionnalité**  
+   Utilisez une branche descriptive pour vos modifications afin de garder une bonne organisation :
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+
+3. **Apporter vos modifications**  
+   Implémentez les fonctionnalités ou corrections dans votre branche.
+
+4. **Committez vos changements**  
+   Fournissez un message de commit clair et concis qui décrit vos modifications :
+   ```bash
+   git commit -m "Ajout de la fonctionnalité AmazingFeature"
+   ```
+
+5. **Poussez vos modifications vers votre dépôt forké**  
+   Envoyez vos changements sur la branche correspondante de votre dépôt forké :
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+
+6. **Ouvrir une Pull Request (PR)**  
+   - Accédez à l'onglet **Pull Requests** dans le dépôt original.
+   - Cliquez sur **New Pull Request**.
+   - Fournissez une description détaillée de vos modifications dans le formulaire de PR.
+
+---
+
+### **Bonnes Pratiques**
+- **Respectez le style du code existant** : Vérifiez que vos changements respectent les conventions de codage du projet.
+- **Incluez des tests** : Si vous ajoutez une nouvelle fonctionnalité, pensez à inclure des tests unitaires ou fonctionnels.
+- **Documentez vos modifications** : Ajoutez les détails nécessaires dans le fichier `README.md` ou dans la documentation si cela s'applique.
+
+---
+
+### **Exemple de Nom de Branche**
+- Pour une nouvelle fonctionnalité : `feature/nomDeLaFonctionnalité`.
+- Pour une correction de bug : `fix/nomDuBug`.
+- Pour une mise à jour de la documentation : `docs/description`.
+
+---
+
+### **Merci pour votre Contribution !**
+Nous examinerons votre Pull Request dès que possible et vous tiendrons informé des prochaines étapes. 😊
+
+--- 
 
 ## License
 
