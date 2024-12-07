@@ -239,17 +239,146 @@ php artisan make:admin    # Crée un nouvel administrateur
 - created_at
 - updated_at
 
-## API Routes
-
-### Livres
-
-GET /api/books - Liste tous les livres
-POST /api/books - Crée un nouveau livre
-GET /api/books/{id} - Récupère un livre spécifique
-PUT /api/books/{id} - Met à jour un livre
-DELETE /api/books/{id} - Supprime un livre
 
 
+## **API Routes**
+
+### **Livres**
+Les routes ci-dessous permettent de gérer les livres au sein de l'application. Toutes les données sont échangées au format JSON.
+
+---
+
+#### **1. Récupérer tous les livres**
+- **Endpoint**: `GET /api/books`
+- **Description**: Récupère la liste de tous les livres disponibles.
+- **Paramètres**: Aucun
+- **Réponse (200)**:
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "Titre du livre",
+      "author": "Nom de l'auteur",
+      "description": "Description du livre",
+      "pdf_url": "https://exemple.com/fichier.pdf",
+      "likes": 123,
+      "category": "Fiction"
+    }
+  ]
+  ```
+
+---
+
+#### **2. Créer un nouveau livre**
+- **Endpoint**: `POST /api/books`
+- **Description**: Ajoute un nouveau livre à la base de données.
+- **Paramètres (body)**:
+  ```json
+  {
+    "title": "Titre du livre",
+    "author": "Nom de l'auteur",
+    "description": "Description du livre",
+    "category_id": 2,
+    "pdf_file": "Fichier PDF (upload multipart/form-data)"
+  }
+  ```
+- **Réponse (201)**:
+  ```json
+  {
+    "message": "Livre créé avec succès",
+    "book": {
+      "id": 1,
+      "title": "Titre du livre",
+      "author": "Nom de l'auteur",
+      "description": "Description du livre",
+      "pdf_url": "https://exemple.com/fichier.pdf",
+      "category_id": 2
+    }
+  }
+  ```
+- **Codes d'erreur**:
+  - `400` : Paramètres invalides ou fichier manquant.
+
+---
+
+#### **3. Récupérer un livre spécifique**
+- **Endpoint**: `GET /api/books/{id}`
+- **Description**: Récupère les détails d’un livre spécifique en fonction de son ID.
+- **Paramètres**:
+  - `id` : L'identifiant unique du livre (dans l'URL).
+- **Réponse (200)**:
+  ```json
+  {
+    "id": 1,
+    "title": "Titre du livre",
+    "author": "Nom de l'auteur",
+    "description": "Description du livre",
+    "pdf_url": "https://exemple.com/fichier.pdf",
+    "likes": 123,
+    "category": "Fiction",
+    "comments": [
+      {
+        "id": 1,
+        "content": "Commentaire sur le livre",
+        "created_at": "2024-12-06T10:00:00Z"
+      }
+    ]
+  }
+  ```
+- **Codes d'erreur**:
+  - `404` : Livre non trouvé.
+
+---
+
+#### **4. Mettre à jour un livre**
+- **Endpoint**: `PUT /api/books/{id}`
+- **Description**: Met à jour les informations d’un livre existant.
+- **Paramètres (body)**:
+  ```json
+  {
+    "title": "Nouveau titre",
+    "author": "Nouvel auteur",
+    "description": "Nouvelle description",
+    "category_id": 3
+  }
+  ```
+- **Réponse (200)**:
+  ```json
+  {
+    "message": "Livre mis à jour avec succès",
+    "book": {
+      "id": 1,
+      "title": "Nouveau titre",
+      "author": "Nouvel auteur",
+      "description": "Nouvelle description",
+      "pdf_url": "https://exemple.com/fichier.pdf",
+      "category_id": 3
+    }
+  }
+  ```
+- **Codes d'erreur**:
+  - `400` : Paramètres invalides.
+  - `404` : Livre non trouvé.
+
+---
+
+#### **5. Supprimer un livre**
+- **Endpoint**: `DELETE /api/books/{id}`
+- **Description**: Supprime un livre en fonction de son ID.
+- **Paramètres**:
+  - `id` : L'identifiant unique du livre (dans l'URL).
+- **Réponse (200)**:
+  ```json
+  {
+    "message": "Livre supprimé avec succès"
+  }
+  ```
+- **Codes d'erreur**:
+  - `404` : Livre non trouvé.
+
+---
+
+Cette version de la documentation offre une structure claire, détaille les attentes et résultats, et permet aux développeurs de comprendre rapidement comment utiliser chaque route de l'API.
 ### Likes
 
 POST /api/books/{id}/toggle - Toggle like/dislike sur un livre
