@@ -165,6 +165,60 @@ php artisan migrate
 - Feedback visuel des actions
 - Mise à jour dynamique des compteurs
 
+
+## Administration
+
+### Accès à l'Administration
+- URL : `/admin`
+- Connexion requise avec des identifiants administrateur
+
+### Création d'un Compte Admin
+
+
+
+php artisan make:admin    # Crée un nouvel administrateur
+
+
+
+### Fonctionnalités Administratives
+
+#### Gestion des Utilisateurs
+- Création/Modification/Suppression des comptes administrateurs
+- Gestion des permissions
+- Visualisation des logs de connexion
+
+#### Gestion des Livres
+- Vue d'ensemble de tous les livres
+- Validation des nouveaux livres
+- Modification/Suppression en masse
+- Gestion des catégories de livres
+- Statistiques de likes/dislikes
+
+#### Tableau de Bord
+- Statistiques globales
+  - Nombre total de livres
+  - Activité des likes/dislikes
+  - Livres les plus populaires
+- Graphiques d'activité
+- Rapports exportables
+
+#### Modération
+- Surveillance des activités suspectes
+- Blocage de sessions
+- Historique des actions de modération
+
+### Rôles et Permissions
+- Super Admin : Accès complet
+- Modérateur : Gestion des livres et modération
+- Éditeur : Gestion du contenu uniquement
+
+### Sécurité Administrative
+- Authentification à deux facteurs
+- Journal des actions administratives
+- Restrictions IP (optionnel)
+- Sessions sécurisées
+
+
 ## Structure de la Base de Données
 
 ### Table `books`
