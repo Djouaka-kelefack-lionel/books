@@ -548,10 +548,78 @@ Les routes ci-dessous permettent de gérer les livres au sein de l'application. 
 
 ---
 
-Cette version de la documentation offre une structure claire, détaille les attentes et résultats, et permet aux développeurs de comprendre rapidement comment utiliser chaque route de l'API.
-### Likes
 
-POST /api/books/{id}/toggle - Toggle like/dislike sur un livre
+
+
+### **Likes**
+
+#### **POST** `/api/books/{id}/toggle`
+
+Cette route permet aux utilisateurs d’ajouter ou de retirer un **like** ou un **dislike** sur un livre spécifique.
+
+---
+
+#### **Détails Fonctionnels**
+- Si un utilisateur n'a pas encore interagi avec le livre, un nouveau **like** ou **dislike** est enregistré.
+- Si une interaction de type identique existe déjà (like ou dislike), elle est retirée (toggle off).
+- Si une interaction différente existe (ex. : dislike → like), elle est remplacée, et les compteurs sont ajustés en conséquence.
+- Les interactions sont basées sur le `session-id`, ce qui permet une gestion simple sans authentification.
+
+---
+
+#### **Paramètres**
+- **Path Parameter** :
+  - `id` : Identifiant unique du livre (obligatoire).
+- **Headers** :
+  - `session-id` : Identifiant de session utilisateur (obligatoire).
+- **Corps de la requête** :
+  - `type` : Obligatoire. Peut être :
+    - `like` : Pour un "j’aime".
+    - `dislike` : Pour un "je n’aime pas".
+
+---
+
+#### **Comportement attendu**
+1. Met à jour ou retire l’interaction dans la table `likes`.
+2. Modifie les champs `likes_count` ou `dislikes_count` dans la table `books`.
+
+---
+
+#### **Exemple**
+##### Requête :
+```http
+POST /api/books/5/toggle HTTP/1.1
+Host: exemple.com
+Content-Type: application/json
+session-id: abc123
+
+{
+  "type": "like"
+}
+```
+
+##### Réponse en cas de succès :
+```json
+{
+  "message": "Interaction mise à jour avec succès.",
+  "book": {
+    "id": 5,
+    "title": "Exemple de Livre",
+    "likes_count": 10,
+    "dislikes_count": 2
+  }
+}
+```
+
+---
+
+#### **Codes de retour**
+- **200** : Succès.
+- **400** : Paramètres invalides (ex. : type incorrect).
+- **404** : Livre non trouvé.
+- **500** : Erreur interne du serveur.
+
+---
 
 
 ## Utilisation
