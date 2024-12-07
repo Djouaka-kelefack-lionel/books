@@ -328,29 +328,87 @@ L'administration inclut des fonctionnalités pour garantir la sécurité et l'in
 - **Restrictions IP** (optionnel) : Limitez l'accès à l'interface d'administration à des plages IP spécifiques.
 - **Sessions sécurisées** : Déconnexion automatique en cas d’inactivité prolongée.
 
+
 ---
 
+## **Structure de la Base de Données**
 
-## Structure de la Base de Données
+Voici la structure des tables principales utilisées dans l'application.
 
-### Table `books`
-- id (primary key)
-- title
-- description
-- author
-- likes_count
-- dislikes_count
-- created_at
-- updated_at
+---
 
-### Table `likes`
-- id (primary key)
-- book_id (foreign key)
-- session_id
-- type (like/dislike)
-- created_at
-- updated_at
+### **1. Table `books`**
+Cette table stocke les informations principales des livres.
 
+| **Colonne**      | **Type**       | **Description**                                    |
+|-------------------|----------------|----------------------------------------------------|
+| `id`             | BIGINT (PK)    | Identifiant unique du livre.                      |
+| `title`          | VARCHAR(255)   | Titre du livre.                                   |
+| `description`    | TEXT           | Description ou résumé du livre.                  |
+| `author`         | VARCHAR(255)   | Nom de l’auteur du livre.                         |
+| `likes_count`    | INTEGER        | Nombre total de likes pour le livre (cache).      |
+| `dislikes_count` | INTEGER        | Nombre total de dislikes pour le livre (cache).   |
+| `created_at`     | TIMESTAMP      | Date de création du livre.                       |
+| `updated_at`     | TIMESTAMP      | Dernière date de mise à jour des informations.    |
+
+#### **Relations**
+- Chaque livre peut recevoir plusieurs likes ou dislikes (relation avec la table `likes`).
+- Les champs `likes_count` et `dislikes_count` servent de cache pour améliorer les performances.
+
+---
+
+### **2. Table `likes`**
+Cette table gère les interactions utilisateur (likes et dislikes).
+
+| **Colonne**      | **Type**       | **Description**                                    |
+|-------------------|----------------|----------------------------------------------------|
+| `id`             | BIGINT (PK)    | Identifiant unique du like/dislike.               |
+| `book_id`        | BIGINT (FK)    | Identifiant du livre associé (relation avec `books`). |
+| `session_id`     | VARCHAR(255)   | Identifiant unique de session pour éviter les doublons. |
+| `type`           | ENUM('like', 'dislike') | Type d’interaction (like ou dislike).        |
+| `created_at`     | TIMESTAMP      | Date à laquelle le like/dislike a été enregistré. |
+| `updated_at`     | TIMESTAMP      | Date de mise à jour (rarement utilisée).          |
+
+#### **Relations**
+- `book_id` est une clé étrangère pointant vers `books.id`.
+
+#### **Contraintes et Suggestions**
+- **Clé unique** : Ajoutez une contrainte unique sur `book_id` + `session_id` pour empêcher qu’un utilisateur ne like/dislike plusieurs fois le même livre.
+- **Index** : Utilisez un index sur `book_id` pour améliorer les performances des requêtes liées aux livres.
+
+---
+
+### **Relations entre les tables**
+1. **`books` → `likes`** (relation 1:N) :
+   - Un livre peut avoir plusieurs likes et dislikes.
+   - La suppression d’un livre entraîne la suppression automatique de ses likes et dislikes associés (cascade delete).
+
+---
+
+### **Diagramme relationnel simplifié**
+```
++----------------+        +----------------+
+|    books       |        |     likes      |
++----------------+        +----------------+
+| id  (PK)       |<---+   | id  (PK)       |
+| title          |    |   | book_id (FK)   |
+| description    |    +---| session_id     |
+| author         |        | type           |
+| likes_count    |        | created_at     |
+| dislikes_count |        | updated_at     |
+| created_at     |        +----------------+
+| updated_at     |
++----------------+
+```
+
+---
+
+### **Optimisation des performances**
+- **Caching des likes/dislikes** : Les champs `likes_count` et `dislikes_count` dans la table `books` permettent de réduire les calculs lors de l’affichage des données.
+- **Indexation** : Assurez-vous que les colonnes `book_id` et `session_id` dans `likes` sont bien indexées pour améliorer les performances des requêtes.
+- **Cascade Delete** : Configurez une suppression en cascade pour simplifier la gestion des relations.
+
+---
 
 
 ## **API Routes**
