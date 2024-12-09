@@ -705,6 +705,21 @@ Nous accueillons avec plaisir les contributions à ce projet. Suivez les étapes
 
 ---
 
+
+---
+
+### **Developpement Futures**
+- Ajout de la fonctionnalité pour modifier un livres
+- Ajout de la fonctionnalité pour modifier une categorie
+- Ajout d'une sous categorie
+- Ajout d'une image de couverture pour un livre
+- 
+-
+-
+
+
+---
+
 ### **Merci pour votre Contribution !**
 Nous examinerons votre Pull Request dès que possible et vous tiendrons informé des prochaines étapes. 😊
 
